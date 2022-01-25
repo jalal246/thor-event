@@ -1,25 +1,34 @@
 import Emitter from "./Emitter";
 import Registry from "./Registry";
+import type { EmitOptions } from "./Registry";
 
-class Events<PayLoadInterface, EventTypes extends string> extends Registry<
-  PayLoadInterface,
-  EventTypes
+class Events<EventTypes extends string, PayLoadInterface> extends Registry<
+  EventTypes,
+  PayLoadInterface
 > {
   private emitter: Emitter<EventTypes>;
 
-  // on(status: TransactionEventStatus, listener: Function) {
-  //   this.emitter.on(status, listener);
-  // }
+  constructor() {
+    super();
 
-  // off(status: TransactionEventStatus, listener: Function) {
-  //   this.emitter.off(status, listener);
-  // }
+    this.emitter = new Emitter<EventTypes>();
+  }
 
-  // emit(obj: EmitOptions<PayLoadInterface, EventTypes>) {
-  //   this.setPayload(obj);
+  on(type: EventTypes, listener: Function) {
+    this.emitter.on(type, listener);
+  }
 
-  //   this.emitter.emit(status, key, this.events[key]);
-  // }
+  off(type: EventTypes, listener: Function) {
+    this.emitter.off(type, listener);
+  }
+
+  emit(obj: EmitOptions<EventTypes, PayLoadInterface>) {
+    this.setPayload(obj);
+
+    if (obj.type) {
+      this.emitter.emit(obj.type, this.events[obj.id]);
+    }
+  }
 }
 
 export default Events;

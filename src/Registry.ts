@@ -1,19 +1,19 @@
-interface EmittedEvent<PayLoadInterface, EventTypes> {
+interface EmittedEvent<EventTypes, PayLoadInterface> {
   type?: EventTypes;
   createdAt: number;
   payload: PayLoadInterface | {};
 }
 
-interface EmitOptions<PayLoadInterface, EventTypes> {
+export interface EmitOptions<EventTypes, PayLoadInterface> {
   id: string;
   payload?: PayLoadInterface;
   type?: EventTypes;
 }
 
-class Registry<PayLoadInterface, EventTypes extends string> {
+class Registry<EventTypes extends string, PayLoadInterface> {
   idsByType: Record<EventTypes, string[]>;
 
-  events: { [id: string]: EmittedEvent<PayLoadInterface, EventTypes> };
+  events: { [id: string]: EmittedEvent<EventTypes, PayLoadInterface> };
 
   constructor() {
     // @ts-expect-error - this is initialized in the constructor.
@@ -21,7 +21,7 @@ class Registry<PayLoadInterface, EventTypes extends string> {
     this.events = {};
   }
 
-  init({ id, type, payload }: EmitOptions<PayLoadInterface, EventTypes>) {
+  init({ id, type, payload }: EmitOptions<EventTypes, PayLoadInterface>) {
     this.events[id] = {
       payload: payload || {},
       createdAt: new Date().getTime(),
@@ -37,7 +37,7 @@ class Registry<PayLoadInterface, EventTypes extends string> {
     }
   }
 
-  setPayload({ id, type, payload }: EmitOptions<PayLoadInterface, EventTypes>) {
+  setPayload({ id, type, payload }: EmitOptions<EventTypes, PayLoadInterface>) {
     if (!this.events[id]) {
       this.init({ id, type, payload });
 

@@ -1,1 +1,3 @@
-export { default } from "./Events";
+import Events from "./Events";
+
+export default Events;
