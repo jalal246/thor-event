@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events should add functions emitter 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {
+      "type-1": Array [
+        [MockFunction],
+        [MockFunction],
+        [MockFunction],
+      ],
+    },
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "type-1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "type-1",
+    },
+  },
+  "idsByType": Object {
+    "type-1": Array [
+      "id-1",
+      "id-2",
+    ],
+  },
+}
+`;
+
+exports[`Events should be defined 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {},
+  "idsByType": Object {},
+}
+`;
+
+exports[`Events should initialize event with two different types 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "type-1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "type-1",
+    },
+    "id-3": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-3",
+        "name": "name-3",
+      },
+      "type": "type-2",
+    },
+  },
+  "idsByType": Object {
+    "type-1": Array [
+      "id-1",
+      "id-2",
+    ],
+    "type-2": Array [
+      "id-3",
+    ],
+  },
+}
+`;
+
+exports[`Events should update event-3 payload 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "type-1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "type-1",
+    },
+    "id-3": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-3",
+        "name": "name-3",
+      },
+      "type": "type-2",
+    },
+  },
+  "idsByType": Object {
+    "type-1": Array [
+      "id-1",
+      "id-2",
+    ],
+    "type-2": Array [
+      "id-3",
+    ],
+  },
+}
+`;
