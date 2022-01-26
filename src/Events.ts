@@ -1,11 +1,18 @@
 import Emitter from "./Emitter";
 import Registry from "./Registry";
-import type { EmitOptions } from "./Registry";
 
-class Events<EventTypes extends string, PayLoadInterface> extends Registry<
-  EventTypes,
-  PayLoadInterface
-> {
+interface EmitOptions<EventTypes, PayLoadInterface, IssuerTypes> {
+  id: string;
+  type: EventTypes;
+  issuer?: IssuerTypes;
+  payload?: PayLoadInterface;
+}
+
+class Events<
+  EventTypes extends string = string,
+  PayLoadInterface extends any = {},
+  IssuerTypes extends string = string
+> extends Registry<EventTypes, PayLoadInterface, IssuerTypes> {
   private emitter: Emitter<EventTypes>;
 
   constructor() {
@@ -14,20 +21,18 @@ class Events<EventTypes extends string, PayLoadInterface> extends Registry<
     this.emitter = new Emitter<EventTypes>();
   }
 
-  on(type: EventTypes, listener: Function) {
-    this.emitter.on(type, listener);
+  on(type: EventTypes, ...listeners: Function[]) {
+    this.emitter.on(type, ...listeners);
   }
 
   off(type: EventTypes, listener: Function) {
     this.emitter.off(type, listener);
   }
 
-  emit(obj: EmitOptions<EventTypes, PayLoadInterface>) {
-    this.setPayload(obj);
+  emit(opts: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
+    this.setPayload(opts);
 
-    if (obj.type) {
-      this.emitter.emit(obj.type, this.events[obj.id]);
-    }
+    this.emitter.emit(opts.type, this.events[opts.id]);
   }
 }
 

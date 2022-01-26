@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events should add function emitter 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {
+      "test1": Array [
+        [MockFunction],
+        [MockFunction],
+        [MockFunction],
+      ],
+    },
+  },
+  "events": Object {
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "test2",
+    },
+  },
+  "idsByType": Object {
+    "test2": Array [
+      "id-2",
+    ],
+  },
+}
+`;
+
+exports[`Events should be defined 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {},
+  "idsByType": Object {},
+}
+`;
+
+exports[`Events should clear from registry 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "test2",
+    },
+  },
+  "idsByType": Object {
+    "test2": Array [
+      "id-2",
+    ],
+  },
+}
+`;
+
+exports[`Events should emit function  1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {
+      "test1": Array [
+        [MockFunction],
+        [MockFunction],
+        [MockFunction],
+      ],
+    },
+  },
+  "events": Object {
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "test2",
+    },
+    "undefined": Object {
+      "createdAt": 1648764000000,
+      "payload": Object {},
+    },
+  },
+  "idsByType": Object {
+    "test2": Array [
+      "id-2",
+    ],
+  },
+}
+`;
+
+exports[`Events should initialize event with two different types 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "test1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "test2",
+    },
+  },
+  "idsByType": Object {
+    "test1": Array [
+      "id-1",
+    ],
+    "test2": Array [
+      "id-2",
+    ],
+  },
+}
+`;
+
+exports[`Events should update event payload 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "test1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "test2",
+    },
+  },
+  "idsByType": Object {
+    "test1": Array [
+      "id-1",
+    ],
+    "test2": Array [
+      "id-2",
+    ],
+  },
+}
+`;
