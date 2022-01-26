@@ -7,12 +7,12 @@ class Emitter<EventTypes extends string> {
     this.listeners = {};
   }
 
-  on(evt: EventTypes, listener: Function) {
+  on(evt: EventTypes, ...listeners: Function[]) {
     if (!this.listeners[evt]) {
       this.listeners[evt] = [];
     }
 
-    this.listeners[evt].push(listener);
+    this.listeners[evt].push(...listeners);
   }
 
   off(evt: EventTypes, listener: Function) {
