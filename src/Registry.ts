@@ -41,7 +41,7 @@ class Registry<
   }: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     this.events[id] = {
       payload: payload || {},
-      createdAt: new Date().getTime(),
+      createdAt: Date.now(),
     };
 
     if (type) {

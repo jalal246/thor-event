@@ -49,7 +49,7 @@ describe("Events", () => {
 
   beforeAll(() => {
     jest.useFakeTimers("modern");
-    jest.setSystemTime(new Date(2022, 3, 1, 0, 0, 0, 0).getTime());
+    jest.setSystemTime(new Date(2022, 3, 1, 0, 0, 0, 0));
 
     event = new Events();
   });
