@@ -1,19 +1,27 @@
-interface EmittedEvent<EventTypes, PayLoadInterface> {
+interface EmittedEvent<EventTypes, PayLoadInterface, IssuerTypes> {
   type?: EventTypes;
+  issuer?: IssuerTypes;
   createdAt: number;
   payload: PayLoadInterface | {};
 }
 
-export interface EmitOptions<EventTypes, PayLoadInterface> {
+export interface EmitOptions<EventTypes, PayLoadInterface, IssuerTypes> {
   id: string;
+  issuer?: IssuerTypes;
   payload?: PayLoadInterface;
   type?: EventTypes;
 }
 
-class Registry<EventTypes extends string, PayLoadInterface> {
+class Registry<
+  EventTypes extends string,
+  PayLoadInterface,
+  IssuerTypes extends string
+> {
   idsByType: Record<EventTypes, string[]>;
 
-  events: { [id: string]: EmittedEvent<EventTypes, PayLoadInterface> };
+  events: {
+    [id: string]: EmittedEvent<EventTypes, PayLoadInterface, IssuerTypes>;
+  };
 
   constructor() {
     // @ts-expect-error - this is initialized in the constructor.
@@ -21,7 +29,12 @@ class Registry<EventTypes extends string, PayLoadInterface> {
     this.events = {};
   }
 
-  init({ id, type, payload }: EmitOptions<EventTypes, PayLoadInterface>) {
+  init({
+    id,
+    type,
+    issuer,
+    payload,
+  }: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
     this.events[id] = {
       payload: payload || {},
       createdAt: new Date().getTime(),
@@ -34,18 +47,25 @@ class Registry<EventTypes extends string, PayLoadInterface> {
 
       this.idsByType[type].push(id);
       this.events[id].type = type;
+
+      if (issuer) {
+        this.events[id].issuer = issuer;
+      }
     }
   }
 
-  setPayload({ id, type, payload }: EmitOptions<EventTypes, PayLoadInterface>) {
-    if (!this.events[id]) {
-      this.init({ id, type, payload });
+  setPayload(opts: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
+    if (!this.events[opts.id]) {
+      this.init(opts);
 
       return;
     }
 
-    if (payload) {
-      this.events[id].payload = { ...payload, ...this.events[id].payload };
+    if (opts.payload) {
+      this.events[opts.id].payload = {
+        ...opts.payload,
+        ...this.events[opts.id].payload,
+      };
     }
   }
 
@@ -62,12 +82,14 @@ class Registry<EventTypes extends string, PayLoadInterface> {
 
     this.internalUpdateID(id, newID, "events");
 
-    const { type } = this.events[id];
+    const { type } = this.events[newID];
 
     if (type && Array.isArray(this.idsByType[type])) {
-      this.idsByType[type] = this.idsByType[type].filter((x) =>
-        x === id ? newID : x
-      );
+      const i = this.idsByType[type].findIndex((x) => x === id);
+
+      if (i !== -1) {
+        this.idsByType[type][i] = newID;
+      }
     }
   }
 
