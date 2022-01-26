@@ -1,5 +1,5 @@
-import Events from "./Events";
+import ThorEvent from "./Events";
 import type { EventInterface } from "./Registry";
 
-export default Events;
+export default ThorEvent;
 export type { EventInterface };

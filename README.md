@@ -13,9 +13,9 @@ npm install thor-event
 Somewhere in your code:
 
 ```typescript
-import { EventEmitter } from "thor-event";
+import ThorEvent from "thor-event";
 
-const appEvent = new EventEmitter();
+const appEvent = new ThorEvent();
 
 appEvent.emit({
   id: "evt-1",
@@ -52,6 +52,66 @@ return (
     <p>userInfo</p>
   </div>
 );
+```
+
+## API
+
+Initialize the event emitter (optional):
+
+```ts
+init(evt: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>)
+```
+
+The evt object contains:
+
+- `id?: string`,
+- `type?: EventTypes | string`,
+- `issuer?: IssuerTypes | string`,
+- `payload?: PayLoadInterface | any`,
+
+Update the payload of an event:
+
+```ts
+setPayload(evt: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>)
+```
+
+Update the id of an event:
+
+```ts
+updateID({ id, newID });
+```
+
+- `id: string`,
+- `newID: string`,
+
+To get all events from the same type:
+
+```ts
+getEventsByType(type?: EventTypes | string) : EventInterface[]
+```
+
+Bind an event listener to an event type:
+
+```ts
+on(type: EventTypes | string, listeners: (evt: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) => void)
+```
+
+Emit an event:
+
+```ts
+emit(evt: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>)
+```
+
+To clear event and its binding listeners:
+
+```ts
+clear(id:string)
+```
+
+Unbind an event listener:
+
+```ts
+off(type: EventTypes | string, listeners: (evt: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) => void)
 ```
 
 ## Test
