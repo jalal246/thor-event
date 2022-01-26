@@ -2,20 +2,7 @@
 import Emitter from "./Emitter";
 import Registry from "./Registry";
 
-interface optsWithID {
-  id: string;
-  type?: never;
-}
-
-interface optsWithType<T extends string> {
-  id?: never;
-  type: T;
-}
-
-interface optsWithBoth<T extends string> {
-  id: string;
-  type: T;
-}
+import type { EventInterface } from "./Registry";
 
 class Events<
   EventTypes extends string = string,
@@ -38,7 +25,7 @@ class Events<
     this.emitter.off(type, listener);
   }
 
-  emit(opts: optsWithID | optsWithType<EventTypes> | optsWithBoth<EventTypes>) {
+  emit(opts: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     const ids = opts.id
       ? [opts.id]
       : opts.type

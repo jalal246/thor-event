@@ -1,20 +1,40 @@
-interface EmittedEvent<EventTypes, PayLoadInterface, IssuerTypes> {
-  type?: EventTypes;
-  issuer?: IssuerTypes;
-  createdAt: number;
-  payload: PayLoadInterface | {};
+interface EvtID {
+  id: string;
+  type?: never;
 }
 
-export interface EventInterface<
+interface EvtType<TP> {
+  id?: never;
+  type: TP;
+}
+
+interface EvtTypeId<TP> {
+  id: string;
+  type: TP;
+}
+
+interface EvtOpts<IS, PL> {
+  issuer?: IS;
+  payload?: PL;
+}
+
+type EvtEssential<TP> = EvtID | EvtType<TP> | EvtTypeId<TP>;
+
+export type EventInterface<
   EventTypes extends string = string,
   PayLoadInterface extends any = {},
   IssuerTypes extends string = string
-> {
-  id: string;
-  issuer?: IssuerTypes;
-  payload?: PayLoadInterface;
-  type?: EventTypes;
-}
+> = EvtEssential<EventTypes> & EvtOpts<IssuerTypes, PayLoadInterface>;
+
+export type EmittedEvent<
+  TP extends string = string,
+  PL extends any = {},
+  IS extends string = string
+> = EvtEssential<TP> & {
+  payload: PL | {};
+  createdAt: number;
+  issuer?: IS;
+};
 
 class Registry<
   EventTypes extends string,
@@ -40,6 +60,7 @@ class Registry<
     payload,
   }: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     this.events[id] = {
+      id,
       payload: payload || {},
       createdAt: Date.now(),
     };
@@ -60,7 +81,7 @@ class Registry<
 
   setPayload(opts: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     if (!this.events[opts.id]) {
-      this.init(opts);
+      this.init({ ...opts });
 
       return;
     }
