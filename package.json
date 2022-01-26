@@ -7,7 +7,7 @@
     "dist",
     "LICENSE"
   ],
-  "repository": "https://github.com/jalal246/thor.git",
+  "repository": "https://github.com/jalal246/thor-event",
   "author": "Jalal MK",
   "license": "MIT",
   "scripts": {
