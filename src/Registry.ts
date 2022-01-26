@@ -5,7 +5,11 @@ interface EmittedEvent<EventTypes, PayLoadInterface, IssuerTypes> {
   payload: PayLoadInterface | {};
 }
 
-export interface EmitOptions<EventTypes, PayLoadInterface, IssuerTypes> {
+export interface EventInterface<
+  EventTypes extends string = string,
+  PayLoadInterface extends any = {},
+  IssuerTypes extends string = string
+> {
   id: string;
   issuer?: IssuerTypes;
   payload?: PayLoadInterface;
@@ -34,7 +38,7 @@ class Registry<
     type,
     issuer,
     payload,
-  }: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
+  }: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     this.events[id] = {
       payload: payload || {},
       createdAt: new Date().getTime(),
@@ -54,7 +58,7 @@ class Registry<
     }
   }
 
-  setPayload(opts: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
+  setPayload(opts: EventInterface<EventTypes, PayLoadInterface, IssuerTypes>) {
     if (!this.events[opts.id]) {
       this.init(opts);
 

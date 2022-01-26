@@ -1,11 +1,20 @@
+/* eslint-disable no-nested-ternary */
 import Emitter from "./Emitter";
 import Registry from "./Registry";
 
-interface EmitOptions<EventTypes, PayLoadInterface, IssuerTypes> {
+interface optsWithID {
   id: string;
-  type: EventTypes;
-  issuer?: IssuerTypes;
-  payload?: PayLoadInterface;
+  type?: never;
+}
+
+interface optsWithType<T extends string> {
+  id?: never;
+  type: T;
+}
+
+interface optsWithBoth<T extends string> {
+  id: string;
+  type: T;
 }
 
 class Events<
@@ -29,10 +38,22 @@ class Events<
     this.emitter.off(type, listener);
   }
 
-  emit(opts: EmitOptions<EventTypes, PayLoadInterface, IssuerTypes>) {
-    this.setPayload(opts);
+  emit(opts: optsWithID | optsWithType<EventTypes> | optsWithBoth<EventTypes>) {
+    const ids = opts.id
+      ? [opts.id]
+      : opts.type
+      ? this.idsByType[opts.type]
+      : [];
 
-    this.emitter.emit(opts.type, this.events[opts.id]);
+    ids.forEach((id) => {
+      this.setPayload({ id, ...opts });
+
+      const { type } = this.events[id];
+
+      if (!type) return;
+
+      this.emitter.emit(type, this.events[id]);
+    });
   }
 }
 
