@@ -14,6 +14,7 @@ Events {
   "events": Object {
     "id-1": Object {
       "createdAt": 1648764000000,
+      "id": "id-1",
       "issuer": "tester",
       "payload": Object {
         "address": "address-1",
@@ -23,6 +24,7 @@ Events {
     },
     "id-2": Object {
       "createdAt": 1648764000000,
+      "id": "id-2",
       "issuer": "tester",
       "payload": Object {
         "address": "address-2",
@@ -50,14 +52,21 @@ Events {
 }
 `;
 
-exports[`Events should initialize event with two different types 1`] = `
+exports[`Events should have the new instances 1`] = `
 Events {
   "emitter": Emitter {
-    "listeners": Object {},
+    "listeners": Object {
+      "type-1": Array [
+        [MockFunction],
+        [MockFunction],
+        [MockFunction],
+      ],
+    },
   },
   "events": Object {
     "id-1": Object {
       "createdAt": 1648764000000,
+      "id": "id-1",
       "issuer": "tester",
       "payload": Object {
         "address": "address-1",
@@ -67,6 +76,54 @@ Events {
     },
     "id-2": Object {
       "createdAt": 1648764000000,
+      "id": "id-2",
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-2",
+        "name": "name-2",
+      },
+      "type": "type-1",
+    },
+    "id-4": Object {
+      "createdAt": 1648764000000,
+      "id": "id-4",
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-4",
+        "name": "name-4",
+      },
+      "type": "type-1",
+    },
+  },
+  "idsByType": Object {
+    "type-1": Array [
+      "id-1",
+      "id-2",
+      "id-4",
+    ],
+  },
+}
+`;
+
+exports[`Events should initialize event with two different types 1`] = `
+Events {
+  "emitter": Emitter {
+    "listeners": Object {},
+  },
+  "events": Object {
+    "id-1": Object {
+      "createdAt": 1648764000000,
+      "id": "id-1",
+      "issuer": "tester",
+      "payload": Object {
+        "address": "address-1",
+        "name": "name-1",
+      },
+      "type": "type-1",
+    },
+    "id-2": Object {
+      "createdAt": 1648764000000,
+      "id": "id-2",
       "issuer": "tester",
       "payload": Object {
         "address": "address-2",
@@ -76,6 +133,7 @@ Events {
     },
     "id-3": Object {
       "createdAt": 1648764000000,
+      "id": "id-3",
       "issuer": "tester",
       "payload": Object {
         "address": "address-3",
@@ -104,6 +162,7 @@ Events {
   "events": Object {
     "id-1": Object {
       "createdAt": 1648764000000,
+      "id": "id-1",
       "issuer": "tester",
       "payload": Object {
         "address": "address-1",
@@ -113,6 +172,7 @@ Events {
     },
     "id-2": Object {
       "createdAt": 1648764000000,
+      "id": "id-2",
       "issuer": "tester",
       "payload": Object {
         "address": "address-2",
@@ -122,6 +182,7 @@ Events {
     },
     "id-3": Object {
       "createdAt": 1648764000000,
+      "id": "id-3",
       "issuer": "tester",
       "payload": Object {
         "address": "address-3",

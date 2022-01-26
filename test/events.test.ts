@@ -11,7 +11,7 @@ interface PayLoadInterface {
 type EventI = EventInterface<EventTypes, PayLoadInterface, IssuerTypes>;
 
 describe("Events", () => {
-  let event: Events<EventTypes, PayLoadInterface, IssuerTypes>;
+  let thor: Events<EventTypes, PayLoadInterface, IssuerTypes>;
 
   const mockCallback1 = jest.fn(() => "function-1 is called");
   const mockCallback2 = jest.fn(() => "function-2 is called");
@@ -47,27 +47,37 @@ describe("Events", () => {
     },
   };
 
+  const evt4: EventI = {
+    id: "id-4",
+    type: "type-1",
+    issuer: "tester",
+    payload: {
+      name: "name-4",
+      address: "address-4",
+    },
+  };
+
   beforeAll(() => {
     jest.useFakeTimers("modern");
     jest.setSystemTime(1648764000000);
 
-    event = new Events();
+    thor = new Events();
   });
 
   it("should be defined", () => {
-    expect(event).toMatchSnapshot();
+    expect(thor).toMatchSnapshot();
   });
 
   it("should initialize event with two different types", () => {
-    event.init(evt1);
-    event.init(evt2);
-    event.init(evt3);
+    thor.init(evt1);
+    thor.init(evt2);
+    thor.init(evt3);
 
-    expect(event).toMatchSnapshot();
+    expect(thor).toMatchSnapshot();
   });
 
   it("should update event-3 payload", () => {
-    event.setPayload({
+    thor.setPayload({
       id: evt3.id,
       payload: {
         name: "name-updated-3",
@@ -75,41 +85,41 @@ describe("Events", () => {
       },
     });
 
-    expect(event).toMatchSnapshot();
+    expect(thor).toMatchSnapshot();
   });
 
   it("should update event-2 id", () => {
-    event.updateID({
+    thor.updateID({
       id: evt3.id,
       newID: "id-3-updated",
     });
 
-    expect(event.idsByType).toMatchObject({
+    expect(thor.idsByType).toMatchObject({
       "type-1": ["id-1", "id-2"],
       "type-2": ["id-3-updated"],
     });
   });
 
   it("should return all registered events in the same type", () => {
-    expect(event.getEventsByType("type-1")).toMatchObject(["id-1", "id-2"]);
-    expect(event.getEventsByType("type-2")).toMatchObject(["id-3-updated"]);
+    expect(thor.getEventsByType("type-1")).toMatchObject(["id-1", "id-2"]);
+    expect(thor.getEventsByType("type-2")).toMatchObject(["id-3-updated"]);
   });
 
   it("should clear from registry", () => {
-    event.clear("id-3-updated");
-    expect(event.getEventsByType("type-2")).toMatchObject([]);
-    expect(event.idsByType).toMatchObject({
+    thor.clear("id-3-updated");
+    expect(thor.getEventsByType("type-2")).toMatchObject([]);
+    expect(thor.idsByType).toMatchObject({
       "type-1": ["id-1", "id-2"],
     });
   });
 
   it("should add functions emitter", () => {
-    event.on("type-1", mockCallback1, mockCallback2, mockCallback3);
-    expect(event).toMatchSnapshot();
+    thor.on("type-1", mockCallback1, mockCallback2, mockCallback3);
+    expect(thor).toMatchSnapshot();
   });
 
   it("should emit all registered function by type", () => {
-    event.emit({
+    thor.emit({
       type: "type-1",
     });
 
@@ -119,12 +129,28 @@ describe("Events", () => {
   });
 
   it("should emit all registered function by id", () => {
-    event.emit({
+    thor.emit({
       id: evt1.id,
+      type: evt1.type,
+      issuer: evt1.issuer,
+      payload: evt4.payload,
     });
 
     expect(mockCallback1).toHaveBeenCalledTimes(1);
     expect(mockCallback2).toHaveBeenCalledTimes(1);
     expect(mockCallback3).toHaveBeenCalledTimes(1);
+  });
+
+  it("should emit by type without init", () => {
+    thor.emit(evt4);
+    thor.on("type-1");
+
+    expect(mockCallback1).toHaveBeenCalledTimes(1);
+    expect(mockCallback2).toHaveBeenCalledTimes(1);
+    expect(mockCallback3).toHaveBeenCalledTimes(1);
+  });
+
+  it("should have the new instances", () => {
+    expect(thor).toMatchSnapshot();
   });
 });
