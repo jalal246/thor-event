@@ -1,6 +1,6 @@
 {
   "name": "thor-event",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Redux but with events",
   "main": "dist/index.js",
   "files": [
